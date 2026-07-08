@@ -13,18 +13,21 @@ var place = 0;
 
 @export var reload_text : RichTextLabel;
 
+@export var continue_text : RichTextLabel;
+
 func _ready() -> void:
-	place_display.text = "[wave]" + str(final_place - place) + " left";
+	place_display.text = "[wave]" + str(final_place - place) + " questions left";
 	
 func move_forward() -> void:
 	place += 1;
-	place_display.text = "[wave]" + str(final_place - place) + " left";
+	place_display.text = "[wave]" + str(final_place - place) + " questions left";
 	
 	if (place == final_place):
 		place_display.text = "[wave] Complete"; 
 		generation.victory = true;
 		
 		reload_text.visible = true;
+		continue_text.visible = false;
 		
 	player.moving = true;
 	player.current_pos = tiles.selected_tiles[place - 1];

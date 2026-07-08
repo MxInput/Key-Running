@@ -12,6 +12,8 @@ var current_row = 0;
 
 @export var reload_text : RichTextLabel;
 
+@export var continue_text : RichTextLabel;
+
 func advance() -> void:
 	current_row += 1;
 	
@@ -23,5 +25,6 @@ func advance() -> void:
 	if (current_row >= player.current_row):
 		generation.dead = true;
 		place_display.text = "[wave] Game Over";
+		continue_text.visible = false;
 		
 		reload_text.visible = true;

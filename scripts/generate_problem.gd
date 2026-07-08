@@ -1,0 +1,231 @@
+extends Node
+
+var generated = false;
+var answered = false;
+var victory = false;
+
+var selected_options := false;
+var completed_tutorial := false;
+
+var max_minuend = 100;
+var max_addend = 9;
+
+var include_add := false;
+var include_min := false;
+var include_mul := false;
+var include_div := false;
+
+var dead = false;
+
+@export var problem_text : RichTextLabel;
+@export var correct_text : RichTextLabel;
+var current_answer = -1;
+
+@export var place_handler : Node;
+
+@export var cloud : Sprite2D;
+
+@onready var timer = get_child(0);
+
+@export var tutorial_screen : TextureRect;
+@export var options_screen : TextureRect;
+
+@export var continue_text : RichTextLabel;
+
+var selected_problems = []
+
+func _ready() -> void:
+	if (!TutorialStatus.tutorial):
+		tutorial_screen.visible = true;
+	else:
+		options_screen.visible = true;
+		
+func get_basic_sub() -> Array[int]:
+	var answer = -1;
+	var num1 = 0;
+	var num2 = 0;
+	
+	while (answer < 0 || answer > 9):
+		num1 = randi_range(0, max_minuend);
+		num2 = randi_range(0, max_minuend);
+		
+		answer = num1 - num2;
+	
+	return [answer, num1, num2];
+	
+func get_basic_add() -> Array[int]:
+	var answer = -1;
+	var num1 = 0;
+	var num2 = 0;
+	
+	while (answer < 0 || answer > 9):
+		num1 = randi_range(0, max_addend);
+		num2 = randi_range(0, max_addend);
+		
+		answer = num1 + num2;
+	
+	return [answer, num1, num2];
+	
+func get_basic_mul() -> Array[int]:
+	var answer = -1;
+	var num1 = 0;
+	var num2 = 0;
+	
+	while (answer < 0 || answer > 9):
+		num1 = randi_range(0, max_addend);
+		num2 = randi_range(0, max_addend);
+		
+		answer = num1 * num2;
+	
+	return [answer, num1, num2];
+	
+func get_basic_div() -> Array[int]:
+	var answer = -1;
+	var num1 = 0;
+	var num2 = 0;
+	
+	var has_remainder = true;
+	
+	while ((answer < 0 && !has_remainder) || (answer > 9 && !has_remainder)):
+		num1 = randi_range(0, max_minuend);
+		num2 = randi_range(0, max_minuend);
+		
+		answer = num1 / num2;
+		
+		var remainder = num1 % num2
+
+		if (remainder > 0 || (num1 == 0 && num2 == 0)):
+			has_remainder = true;
+		else:
+			has_remainder = false;
+	
+	print(answer);		
+	return [answer, num1, num2];
+	
+func _input(event) -> void:
+	if (TutorialStatus.tutorial):
+		if (selected_options || completed_tutorial):
+			if event.is_action_pressed("1") && !answered && !dead && !victory:
+				pickAnswer(1);
+			elif event.is_action_pressed("2") && !answered && !dead && !victory:
+				pickAnswer(2);
+			elif event.is_action_pressed("3") && !answered && !dead && !victory:	
+				pickAnswer(3);
+			elif event.is_action_pressed("4") && !answered && !dead && !victory:
+				pickAnswer(4);
+			elif event.is_action_pressed("5") && !answered && !dead && !victory:
+				pickAnswer(5);
+			elif event.is_action_pressed("6") && !answered && !dead && !victory:
+				pickAnswer(6);
+			elif event.is_action_pressed("7") && !answered && !dead && !victory:
+				pickAnswer(7);
+			elif event.is_action_pressed("8") && !answered && !dead && !victory:
+				pickAnswer(8);
+			elif event.is_action_pressed("9") && !answered && !dead && !victory:
+				pickAnswer(9);
+			elif event.is_action_pressed("0") && !answered && !dead && !victory:
+				pickAnswer(0);
+			elif event.is_action_pressed("Space"):
+				if (answered && generated):
+					generated = false;
+					answered = false;
+					
+					if (!dead && !victory):
+						correct_text.visible = false;
+						continue_text.visible = false;
+					elif (dead || victory):
+						timer.start();
+		else:
+			if event.is_action_pressed("Space"):
+				include_add = options_screen.find_child("Addition").is_pressed();
+				include_min = options_screen.find_child("Subtraction").is_pressed();
+				include_div = options_screen.find_child("Division").is_pressed();
+				include_mul = options_screen.find_child("Multiplication").is_pressed();
+				
+				if (include_add || include_min || include_div || include_mul):
+					selected_options = true;
+					options_screen.visible = false;
+									
+					if (include_add):
+						selected_problems.push_back(1);
+					
+					if (include_div):
+						selected_problems.push_back(3);
+						
+					if (include_min):
+						selected_problems.push_back(0);
+						
+					if (include_mul):
+						selected_problems.push_back(2);
+				else:
+					options_screen.find_child("Warn").visible = true;
+	else:
+		if event.is_action_pressed("Space"):
+			include_add = tutorial_screen.find_child("Addition").is_pressed();
+			include_min = tutorial_screen.find_child("Subtraction").is_pressed();
+			include_div = tutorial_screen.find_child("Division").is_pressed();
+			include_mul = tutorial_screen.find_child("Multiplication").is_pressed();
+			
+			if (include_add || include_min || include_div || include_mul):
+				TutorialStatus.tutorial = true;
+				tutorial_screen.visible = false;
+				
+				completed_tutorial = true;
+				
+				if (include_add):
+					selected_problems.push_back(1);
+				
+				if (include_div):
+					selected_problems.push_back(3);
+					
+				if (include_min):
+					selected_problems.push_back(0);
+					
+				if (include_mul):
+					selected_problems.push_back(2);
+			else:
+				tutorial_screen.find_child("Warn").visible = true;
+			
+func pickAnswer(answer : int) -> void:
+	answered = true;
+	
+	problem_text.text += " = " + str(answer);
+	
+	correct_text.visible = true;
+	continue_text.visible = true;
+	
+	if (answer == current_answer):	
+		correct_text.text = "[wave]Correct";
+		correct_text.modulate = Color(0.253, 0.588, 0.49, 1.0);
+		
+		place_handler.move_forward();
+	else:
+		correct_text.text = "[wave]Incorrect";
+		correct_text.modulate = Color(0.706, 0.188, 0.268, 1.0);
+		
+	cloud.advance();
+			
+func _process(delta: float) -> void:
+	if (!generated && place_handler.place < place_handler.final_place && !dead && (completed_tutorial || selected_options)):
+		var generated_nums
+		var rand_choice = selected_problems.pick_random();
+			
+		match (rand_choice):
+			0:
+				generated_nums = get_basic_sub();
+				problem_text.text = "[wave]" + str(generated_nums[1]) + " - " + str(generated_nums[2]);
+			1:
+				generated_nums = get_basic_add();
+				problem_text.text = "[wave]" + str(generated_nums[1]) + " + " + str(generated_nums[2]);
+			2:
+				generated_nums = get_basic_mul();
+				problem_text.text = "[wave]" + str(generated_nums[1]) + " * " + str(generated_nums[2]);
+			3:
+				generated_nums = get_basic_div();
+				problem_text.text = "[wave]" + str(generated_nums[1]) + " / " + str(generated_nums[2]);
+				
+		current_answer = generated_nums[0];
+		generated = true;
+
+func _on_timer_timeout() -> void:
+	get_tree().reload_current_scene();
