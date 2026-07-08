@@ -1,6 +1,6 @@
 extends Node
 
-@onready var propeller_texture : Texture2D = preload("res://images/propeller_hat.png")
+@onready var propeller_texture : Texture2D = preload("res://images/propeller_hat.png");
 
 var generated = false;
 var answered = false;
@@ -9,8 +9,8 @@ var victory = false;
 var selected_options := false;
 var completed_tutorial := false;
 
-var max_minuend = 100;
-var max_addend = 9;
+const max_minuend = 100;
+const max_addend = 9;
 
 var include_add := false;
 var include_min := false;
@@ -21,7 +21,6 @@ var dead = false;
 
 @export var problem_text : RichTextLabel;
 @export var correct_text : RichTextLabel;
-var current_answer = -1;
 
 @export var place_handler : Node;
 
@@ -38,7 +37,11 @@ var current_answer = -1;
 
 @export var player : CharacterBody2D;
 
-var selected_problems = []
+@export var tiles : TileMapLayer;
+
+var selected_problems = [];
+
+var current_answer = -1;
 
 func _ready() -> void:
 	if (!TutorialStatus.tutorial):
@@ -46,9 +49,11 @@ func _ready() -> void:
 	else:
 		options_screen.visible = true;
 		
-		player.find_child("Hat").visible = true;
+		var found_hat := player.find_child("Hat");
+		found_hat.visible = true;
+		
 		if (!TutorialStatus.last_won):
-			player.find_child("Hat").texture = propeller_texture;
+			found_hat.texture = propeller_texture;
 		
 	if (TutorialStatus.wins > 0 || TutorialStatus.losses > 0):
 		winLossTeller.visible = true;
@@ -123,24 +128,34 @@ func _input(event) -> void:
 		if (selected_options || completed_tutorial):
 			if event.is_action_pressed("1") && !answered && !dead && !victory:
 				pickAnswer(1);
+				
 			elif event.is_action_pressed("2") && !answered && !dead && !victory:
 				pickAnswer(2);
+				
 			elif event.is_action_pressed("3") && !answered && !dead && !victory:	
 				pickAnswer(3);
+				
 			elif event.is_action_pressed("4") && !answered && !dead && !victory:
 				pickAnswer(4);
+				
 			elif event.is_action_pressed("5") && !answered && !dead && !victory:
 				pickAnswer(5);
+				
 			elif event.is_action_pressed("6") && !answered && !dead && !victory:
 				pickAnswer(6);
+				
 			elif event.is_action_pressed("7") && !answered && !dead && !victory:
 				pickAnswer(7);
+				
 			elif event.is_action_pressed("8") && !answered && !dead && !victory:
 				pickAnswer(8);
+				
 			elif event.is_action_pressed("9") && !answered && !dead && !victory:
 				pickAnswer(9);
+				
 			elif event.is_action_pressed("0") && !answered && !dead && !victory:
 				pickAnswer(0);
+				
 			elif event.is_action_pressed("Space"):
 				if (answered && generated):
 					generated = false;
@@ -218,6 +233,7 @@ func pickAnswer(answer : int) -> void:
 	else:
 		correct_text.text = "[wave]Incorrect";
 		correct_text.modulate = Color(0.706, 0.188, 0.268, 1.0);
+		tiles.set_cell(tiles.local_to_map(tiles.to_local(player.position)), 2, Vector2i(0,0))
 		
 	cloud.advance();
 			
