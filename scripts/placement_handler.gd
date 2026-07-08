@@ -23,6 +23,9 @@ func move_forward() -> void:
 	place_display.text = "[wave]" + str(final_place - place) + " questions left";
 	
 	if (place == final_place):
+		TutorialStatus.wins += 1;
+		TutorialStatus.last_won = true;
+
 		place_display.text = "[wave] Complete"; 
 		generation.victory = true;
 		

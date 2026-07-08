@@ -1,5 +1,7 @@
 extends Node
 
+@onready var propeller_texture : Texture2D = preload("res://images/propeller_hat.png")
+
 var generated = false;
 var answered = false;
 var victory = false;
@@ -32,6 +34,10 @@ var current_answer = -1;
 
 @export var continue_text : RichTextLabel;
 
+@export var winLossTeller : ColorRect;
+
+@export var player : CharacterBody2D;
+
 var selected_problems = []
 
 func _ready() -> void:
@@ -40,6 +46,14 @@ func _ready() -> void:
 	else:
 		options_screen.visible = true;
 		
+		player.find_child("Hat").visible = true;
+		if (!TutorialStatus.last_won):
+			player.find_child("Hat").texture = propeller_texture;
+		
+	if (TutorialStatus.wins > 0 || TutorialStatus.losses > 0):
+		winLossTeller.visible = true;
+		winLossTeller.get_child(0).text = "[wave]Number of Wins: " + str(TutorialStatus.wins) + "; Number of Losses: " + str(TutorialStatus.losses);
+		 
 func get_basic_sub() -> Array[int]:
 	var answer = -1;
 	var num1 = 0;
@@ -86,20 +100,22 @@ func get_basic_div() -> Array[int]:
 	
 	var has_remainder = true;
 	
-	while ((answer < 0 && !has_remainder) || (answer > 9 && !has_remainder)):
+	while ((answer < 0 || answer > 9) || has_remainder):
 		num1 = randi_range(0, max_minuend);
 		num2 = randi_range(0, max_minuend);
 		
+		if (num2 == 0):
+			continue;
+
 		answer = num1 / num2;
 		
 		var remainder = num1 % num2
 
-		if (remainder > 0 || (num1 == 0 && num2 == 0)):
+		if (remainder != 0):
 			has_remainder = true;
 		else:
 			has_remainder = false;
-	
-	print(answer);		
+
 	return [answer, num1, num2];
 	
 func _input(event) -> void:

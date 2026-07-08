@@ -24,6 +24,8 @@ func advance() -> void:
 	
 	if (current_row >= player.current_row):
 		generation.dead = true;
+		TutorialStatus.losses += 1;
+		TutorialStatus.last_won = false;
 		place_display.text = "[wave] Game Over";
 		continue_text.visible = false;
 		
