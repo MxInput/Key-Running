@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://03nkflj0m55h"]
+
+[ext_resource type="Script" uid="uid://cvgiyh42u08xo" path="res://nodes/placement_handler.gd" id="1_cpdmu"]
+[ext_resource type="Script" uid="uid://nyua4gamjidl" path="res://nodes/generate_problem.gd" id="1_hneav"]
+
+[node name="Game" type="Node" unique_id=905534404]
+
+[node name="Place" type="Node" parent="." unique_id=66689885 node_paths=PackedStringArray("place_display")]
+script = ExtResource("1_cpdmu")
+place_display = NodePath("../CanvasLayer/Place")
+
+[node name="Generate" type="Node" parent="." unique_id=1099294717 node_paths=PackedStringArray("problem_text", "place_handler")]
+script = ExtResource("1_hneav")
+problem_text = NodePath("../CanvasLayer/Problem")
+place_handler = NodePath("../Place")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1709393668]
+
+[node name="Problem" type="RichTextLabel" parent="CanvasLayer" unique_id=1088389055]
+offset_left = 43.0
+offset_top = -3.0
+offset_right = 958.0
+offset_bottom = 131.0
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[wave]50-2"
+
+[node name="Place" type="RichTextLabel" parent="CanvasLayer" unique_id=1030060760]
+offset_left = 64.0
+offset_top = 196.0
+offset_right = 979.0
+offset_bottom = 330.0
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[wave]0"
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=879405012]

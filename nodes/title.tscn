@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dhjsjaqwx7kn0"]
+
+[node name="Title" type="Node" unique_id=1147228826]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1196170823]
+
+[node name="Title" type="RichTextLabel" parent="CanvasLayer" unique_id=1020612704]
+offset_right = 469.0
+offset_bottom = 51.0
+text = "KEY RUNNING"
+
+[node name="Easy" type="TextureButton" parent="." unique_id=1152821675]
+offset_left = 47.0
+offset_top = 130.0
+offset_right = 87.0
+offset_bottom = 170.0
+
+[node name="Label" type="Label" parent="Easy" unique_id=1595481235]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "EASY"
+
+[node name="Medium" type="TextureButton" parent="." unique_id=672545968]
+offset_left = 39.0
+offset_top = 194.0
+offset_right = 79.0
+offset_bottom = 234.0
+
+[node name="Label" type="Label" parent="Medium" unique_id=1584805053]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "MEDIUM"
+
+[node name="Hard" type="TextureButton" parent="." unique_id=2024247774]
+offset_left = 35.0
+offset_top = 274.0
+offset_right = 75.0
+offset_bottom = 314.0
+
+[node name="Label" type="Label" parent="Hard" unique_id=1744972151]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "HARD"
