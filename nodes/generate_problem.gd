@@ -77,10 +77,17 @@ func pickAnswer(answer : int) -> void:
 			
 func _process(delta: float) -> void:
 	if (!generated && place_handler.place < place_handler.final_place):
-		var generated_nums = get_basic_sub();
-		var generated_nums2 = get_basic_add();
-		print(generated_nums2);
-		problem_text.text = "[wave]" + str(generated_nums[1]) + " - " + str(generated_nums[2]);
+		var generated_nums
+		var rand_choice = randi_range(0, 1);
+			
+		match (rand_choice):
+			0:
+				generated_nums = get_basic_sub();
+				problem_text.text = "[wave]" + str(generated_nums[1]) + " - " + str(generated_nums[2]);
+			1:
+				generated_nums = get_basic_add();
+				problem_text.text = "[wave]" + str(generated_nums[1]) + " + " + str(generated_nums[2]);
+		
 		current_answer = generated_nums[0];
 		generated = true;
 		
