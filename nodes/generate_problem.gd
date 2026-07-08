@@ -11,6 +11,8 @@ var current_answer = -1;
 
 @export var place_handler : Node;
 
+@export var cloud : Sprite2D;
+
 func get_basic_sub() -> Array[int]:
 	var answer = -1;
 	var num1 = 0;
@@ -65,6 +67,7 @@ func _input(event) -> void:
 
 func pickAnswer(answer : int) -> void:
 	answered = true;
+	cloud.advance();
 	
 	problem_text.text += " = " + str(answer);
 	
