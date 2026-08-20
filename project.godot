@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Key Running"
+config/name="KeyRunningImprove"
 run/main_scene="uid://03nkflj0m55h"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
@@ -18,6 +18,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 TutorialStatus="*uid://bbub05vtl07k0"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [editor_plugins]
 

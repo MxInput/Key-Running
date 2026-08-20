@@ -13,10 +13,27 @@ extends Sprite2D
 
 var current_row := 0;
 
+var moving := false;
+var final_pos : Vector2;
+
+var time := 0.0;
+
+func _process(delta: float) -> void:
+	time += delta;
+	
+	if (moving):
+		position = lerp(position, final_pos, time);
+		
+		if (position.x >= final_pos.x):
+			moving = false;
+			position = final_pos;
+		
 func advance() -> void:
 	current_row += 1;
 	
-	position = Vector2(tiles.to_global(tiles.map_to_local(Vector2i(current_row, 0))).x, position.y);
+	moving = true;
+	final_pos = Vector2(tiles.to_global(tiles.map_to_local(Vector2i(current_row, 0))).x, position.y);
+	time = 0.0;
 	
 	for tile_y in tiles.bot_y + 2:
 		tiles.set_cell(Vector2i(current_row, tile_y), 3, Vector2i(0,0));
