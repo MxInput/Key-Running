@@ -39,11 +39,14 @@ var dead = false;
 
 @export var tiles : TileMapLayer;
 
+var max_hard_addend := 9999;
+
 var selected_problems = [];
 
 var current_answer = -1;
 
 func _ready() -> void:
+	get_longer_div()
 	if (!TutorialStatus.tutorial):
 		tutorial_screen.visible = true;
 	else:
@@ -121,6 +124,38 @@ func get_basic_div() -> Array[int]:
 		else:
 			has_remainder = false;
 
+	return [answer, num1, num2];
+	
+func get_longer_div() -> Array[int]:
+	var answer = -1;
+	var num1 = 0;
+	var num2 = 0;
+	
+	var has_remainder = true;
+	var reroll_count := 0;
+	
+	while ((answer < 0 || answer > 9) || has_remainder):
+		num1 = randi_range(0, max_hard_addend);
+		num2 = randi_range(0, max_hard_addend);
+		
+		if (num2 == 0):
+			continue;
+
+		answer = num1 / num2;
+		
+		var remainder = num1 % num2
+
+		if (remainder != 0):
+			has_remainder = true;
+		else:
+			has_remainder = false;
+			
+		if ((answer == 1 || answer == 0) && reroll_count < 50):
+			reroll_count += 1;
+			
+			answer = -1;
+			continue;
+			
 	return [answer, num1, num2];
 	
 func _input(event) -> void:
