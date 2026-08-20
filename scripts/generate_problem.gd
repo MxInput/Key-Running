@@ -16,6 +16,7 @@ var include_add := false;
 var include_min := false;
 var include_mul := false;
 var include_div := false;
+var include_harder_div := false;
 
 var dead = false;
 
@@ -206,9 +207,10 @@ func _input(event) -> void:
 				include_add = options_screen.find_child("Addition").is_pressed();
 				include_min = options_screen.find_child("Subtraction").is_pressed();
 				include_div = options_screen.find_child("Division").is_pressed();
+				include_harder_div = tutorial_screen.find_child("HarderDivision").is_pressed();
 				include_mul = options_screen.find_child("Multiplication").is_pressed();
 				
-				if (include_add || include_min || include_div || include_mul):
+				if (include_add || include_min || include_div || include_mul || include_harder_div):
 					selected_options = true;
 					options_screen.visible = false;
 									
@@ -217,7 +219,10 @@ func _input(event) -> void:
 					
 					if (include_div):
 						selected_problems.push_back(3);
-						
+					
+					if (include_harder_div):
+						selected_problems.push_back(4);
+							
 					if (include_min):
 						selected_problems.push_back(0);
 						
@@ -230,9 +235,10 @@ func _input(event) -> void:
 			include_add = tutorial_screen.find_child("Addition").is_pressed();
 			include_min = tutorial_screen.find_child("Subtraction").is_pressed();
 			include_div = tutorial_screen.find_child("Division").is_pressed();
+			include_harder_div = tutorial_screen.find_child("HarderDivision").is_pressed();
 			include_mul = tutorial_screen.find_child("Multiplication").is_pressed();
 			
-			if (include_add || include_min || include_div || include_mul):
+			if (include_add || include_min || include_div || include_mul || include_harder_div):
 				TutorialStatus.tutorial = true;
 				tutorial_screen.visible = false;
 				
@@ -244,6 +250,9 @@ func _input(event) -> void:
 				if (include_div):
 					selected_problems.push_back(3);
 					
+				if (include_harder_div):
+					selected_problems.push_back(4);
+						
 				if (include_min):
 					selected_problems.push_back(0);
 					
@@ -290,7 +299,10 @@ func _process(delta: float) -> void:
 			3:
 				generated_nums = get_basic_div();
 				problem_text.text = "[wave]" + str(generated_nums[1]) + " / " + str(generated_nums[2]);
-				
+			4:
+				generated_nums = get_longer_div();
+				problem_text.text = "[wave]" + str(generated_nums[1]) + " / " + str(generated_nums[2]);
+		
 		current_answer = generated_nums[0];
 		generated = true;
 
