@@ -13,10 +13,15 @@ const max_minuend = 100;
 const max_addend = 9;
 
 var include_add := false;
+
 var include_min := false;
+
 var include_mul := false;
+
 var include_div := false;
 var include_harder_div := false;
+
+var include_sqrt := false;
 
 var dead = false;
 
@@ -47,7 +52,6 @@ var selected_problems = [];
 var current_answer = -1;
 
 func _ready() -> void:
-	get_longer_div()
 	if (!TutorialStatus.tutorial):
 		tutorial_screen.visible = true;
 	else:
@@ -158,6 +162,24 @@ func get_longer_div() -> Array[int]:
 			continue;
 			
 	return [answer, num1, num2];
+
+func get_sqrt() -> Array[int]:
+	var answer = -1;
+	var num1 = 0;
+
+	var reroll_count := 0;
+	
+	while ((answer < 0 || answer > 9)):
+		num1 = randi_range(0, max_hard_addend);
+		
+		var square_root = sqrt(num1);
+		
+		if (!is_equal_approx(int(square_root), square_root)):
+			continue;
+			
+		answer = int(square_root);
+
+	return [answer, num1];
 	
 func _input(event) -> void:
 	if (TutorialStatus.tutorial):
@@ -205,12 +227,17 @@ func _input(event) -> void:
 		else:
 			if event.is_action_pressed("Space"):
 				include_add = options_screen.find_child("Addition").is_pressed();
+				
 				include_min = options_screen.find_child("Subtraction").is_pressed();
+				
 				include_div = options_screen.find_child("Division").is_pressed();
-				include_harder_div = tutorial_screen.find_child("HarderDivision").is_pressed();
+				include_harder_div = options_screen.find_child("HarderDivision").is_pressed();
+				
 				include_mul = options_screen.find_child("Multiplication").is_pressed();
 				
-				if (include_add || include_min || include_div || include_mul || include_harder_div):
+				include_sqrt = options_screen.find_child("Sqrt").is_pressed();
+				
+				if (include_add || include_min || include_div || include_mul || include_harder_div || include_sqrt):
 					selected_options = true;
 					options_screen.visible = false;
 									
@@ -228,17 +255,25 @@ func _input(event) -> void:
 						
 					if (include_mul):
 						selected_problems.push_back(2);
+						
+					if (include_sqrt):
+						selected_problems.push_back(5);
 				else:
 					options_screen.find_child("Warn").visible = true;
 	else:
 		if event.is_action_pressed("Space"):
 			include_add = tutorial_screen.find_child("Addition").is_pressed();
+			
 			include_min = tutorial_screen.find_child("Subtraction").is_pressed();
+			
 			include_div = tutorial_screen.find_child("Division").is_pressed();
 			include_harder_div = tutorial_screen.find_child("HarderDivision").is_pressed();
+			
 			include_mul = tutorial_screen.find_child("Multiplication").is_pressed();
 			
-			if (include_add || include_min || include_div || include_mul || include_harder_div):
+			include_sqrt = tutorial_screen.find_child("Sqrt").is_pressed();
+			
+			if (include_add || include_min || include_div || include_mul || include_harder_div || include_sqrt):
 				TutorialStatus.tutorial = true;
 				tutorial_screen.visible = false;
 				
@@ -258,6 +293,9 @@ func _input(event) -> void:
 					
 				if (include_mul):
 					selected_problems.push_back(2);
+					
+				if (include_sqrt):
+					selected_problems.push_back(5);
 			else:
 				tutorial_screen.find_child("Warn").visible = true;
 			
@@ -302,7 +340,10 @@ func _process(delta: float) -> void:
 			4:
 				generated_nums = get_longer_div();
 				problem_text.text = "[wave]" + str(generated_nums[1]) + " / " + str(generated_nums[2]);
-		
+			5:
+				generated_nums = get_sqrt();
+				problem_text.text = "[wave]SQRT(" + str(generated_nums[1]) + ")";
+				
 		current_answer = generated_nums[0];
 		generated = true;
 

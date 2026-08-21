@@ -160,6 +160,7 @@ text = "[wave]0"
 vertical_alignment = 1
 
 [node name="Tutorial" type="TextureRect" parent="CanvasLayer" unique_id=699105077]
+visible = false
 offset_left = 267.0
 offset_top = 201.0
 offset_right = 907.0
@@ -196,9 +197,9 @@ text = "Include Subtraction"
 
 [node name="Multiplication" type="CheckBox" parent="CanvasLayer/Tutorial" unique_id=530099892]
 layout_mode = 0
-offset_left = 217.0
+offset_left = 172.0
 offset_top = 160.0
-offset_right = 372.0
+offset_right = 344.0
 offset_bottom = 191.0
 theme_override_colors/font_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
 theme_override_colors/font_focus_color = Color(0.4631911, 0.9781614, 0.28653613, 1)
@@ -208,11 +209,25 @@ theme_override_colors/font_hover_pressed_color = Color(0.4631911, 0.9781614, 0.2
 theme_override_fonts/font = ExtResource("4_dv0a3")
 text = "Include Multiplication"
 
+[node name="Sqrt" type="CheckBox" parent="CanvasLayer/Tutorial" unique_id=267026615]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 160.0
+offset_right = 516.0
+offset_bottom = 191.0
+theme_override_colors/font_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
+theme_override_colors/font_focus_color = Color(0.4631911, 0.9781614, 0.28653613, 1)
+theme_override_colors/font_pressed_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
+theme_override_colors/font_hover_color = Color(0.4631911, 0.9781614, 0.28653613, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.4631911, 0.9781614, 0.28653613, 1)
+theme_override_fonts/font = ExtResource("4_dv0a3")
+text = "Include Square Roots"
+
 [node name="Division" type="CheckBox" parent="CanvasLayer/Tutorial" unique_id=1781184867]
 layout_mode = 0
-offset_left = 217.0
+offset_left = 184.0
 offset_top = 190.0
-offset_right = 397.0
+offset_right = 364.0
 offset_bottom = 221.0
 theme_override_colors/font_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
 theme_override_colors/font_focus_color = Color(0.4631911, 0.9781614, 0.28653613, 1)
@@ -224,9 +239,9 @@ text = "Include Division"
 
 [node name="HarderDivision" type="CheckBox" parent="CanvasLayer/Tutorial" unique_id=693574250]
 layout_mode = 0
-offset_left = 350.0
+offset_left = 317.0
 offset_top = 190.0
-offset_right = 530.0
+offset_right = 499.0
 offset_bottom = 221.0
 theme_override_colors/font_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
 theme_override_colors/font_focus_color = Color(0.4631911, 0.9781614, 0.28653613, 1)
@@ -356,6 +371,20 @@ theme_override_colors/font_hover_color = Color(0.34901962, 0.75686276, 0.2078431
 theme_override_colors/font_hover_pressed_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
 theme_override_fonts/font = ExtResource("4_dv0a3")
 text = "Include Division"
+
+[node name="Sqrt" type="CheckBox" parent="CanvasLayer/Options" unique_id=1631436817]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 133.0
+offset_right = 206.0
+offset_bottom = 164.0
+theme_override_colors/font_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
+theme_override_colors/font_focus_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
+theme_override_colors/font_pressed_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
+theme_override_colors/font_hover_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.34901962, 0.75686276, 0.20784314, 1)
+theme_override_fonts/font = ExtResource("4_dv0a3")
+text = "Include Square Root"
 
 [node name="HarderDivision" type="CheckBox" parent="CanvasLayer/Options" unique_id=1551516094]
 layout_mode = 0
