@@ -313,6 +313,8 @@ func pickAnswer(answer : int) -> void:
 		
 		place_handler.move_forward();
 	else:
+		TutorialStatus.perfect = false;
+
 		correct_text.text = "[wave]Incorrect";
 		correct_text.modulate = Color(0.706, 0.188, 0.268, 1.0);
 		tiles.set_cell(tiles.local_to_map(tiles.to_local(player.position)), 2, Vector2i(0,0))

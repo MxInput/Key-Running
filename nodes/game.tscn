@@ -273,7 +273,7 @@ offset_right = 618.0
 offset_bottom = 95.0
 theme_override_colors/default_color = Color(0.16470589, 0.0627451, 0.3137255, 1)
 theme_override_fonts/normal_font = ExtResource("4_dv0a3")
-text = "MATH PROBLEMS APPEAR ABOVE ON THE LEFT. ANSWER THEM BY PRESSING THE KEY ON YOUR KEYBOARD THAT REPRESENTS THE  ANSWER."
+text = "MATH PROBLEMS APPEAR ABOVE ON THE TOP LEFT. ANSWER THEM BY PRESSING THE KEY ON YOUR KEYBOARD THAT REPRESENTS THE  ANSWER."
 
 [node name="Info2" type="RichTextLabel" parent="CanvasLayer/Tutorial" unique_id=464283018]
 layout_mode = 0

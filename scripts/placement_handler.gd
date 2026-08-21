@@ -19,6 +19,8 @@ var place := 0;
 @export var purple_particles : CPUParticles2D;
 
 func _ready() -> void:
+	TutorialStatus.perfect = true;
+	
 	place_display.text = "[wave]" + str(final_place - place) + " questions left";
 	
 func move_forward() -> void:
@@ -32,7 +34,11 @@ func move_forward() -> void:
 		TutorialStatus.wins += 1;
 		TutorialStatus.last_won = true;
 		
-		place_display.text = "[rainbow][tornado radius=2 freq=10] Complete"; 
+		if (TutorialStatus.perfect):
+			place_display.text = "[rainbow][tornado radius=2 freq=10] Complete (Perfect)";
+		else:
+			place_display.text = "[rainbow][tornado radius=2 freq=10] Complete"; 
+			
 		generation.victory = true;
 		
 		reload_text.visible = true;
